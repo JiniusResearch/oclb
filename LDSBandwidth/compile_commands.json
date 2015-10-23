@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/opt/AMDAPPSDK-3.0/samples/opencl/benchmark/LDSBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/opt/AMDAPPSDK-3.0/samples/opencl/benchmark/LDSBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/LDSBandwidth.dir/LDSBandwidth.cpp.o -c /opt/AMDAPPSDK-3.0/samples/opencl/benchmark/LDSBandwidth/LDSBandwidth.cpp",
+  "file": "/opt/AMDAPPSDK-3.0/samples/opencl/benchmark/LDSBandwidth/LDSBandwidth.cpp"
+}
+]

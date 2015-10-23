@@ -1,0 +1,36 @@
+Scanning dependencies of target BufferBandwidth
+[ 14%] Building CXX object BufferBandwidth/CMakeFiles/BufferBandwidth.dir/BufferBandwidth.cpp.o
+[ 28%] Building CXX object BufferBandwidth/CMakeFiles/BufferBandwidth.dir/Host.cpp.o
+[ 42%] Building CXX object BufferBandwidth/CMakeFiles/BufferBandwidth.dir/Log.cpp.o
+Linking CXX executable bin/x86_64/Debug/BufferBandwidth
+[ 42%] Built target BufferBandwidth
+Scanning dependencies of target ConstantBandwidth
+[ 57%] Building CXX object ConstantBandwidth/CMakeFiles/ConstantBandwidth.dir/ConstantBandwidth.cpp.o
+/home/jin/dev/oclb/ConstantBandwidth/ConstantBandwidth.cpp: In member function ‘int ConstantBandwidth::setupCL()’:
+/home/jin/dev/oclb/ConstantBandwidth/ConstantBandwidth.cpp:211:24: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated (declared at /opt/AMDAPPSDK-3.0/include/CL/cl.h:1359) [-Wdeprecated-declarations]
+         commandQueue = clCreateCommandQueue(context,
+                        ^
+/home/jin/dev/oclb/ConstantBandwidth/ConstantBandwidth.cpp:214:52: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated (declared at /opt/AMDAPPSDK-3.0/include/CL/cl.h:1359) [-Wdeprecated-declarations]
+                                             &status);
+                                                    ^
+Linking CXX executable bin/x86_64/Debug/ConstantBandwidth
+[ 57%] Built target ConstantBandwidth
+Scanning dependencies of target GlobalMemoryBandwidth
+[ 71%] Building CXX object GlobalMemoryBandwidth/CMakeFiles/GlobalMemoryBandwidth.dir/GlobalMemoryBandwidth.cpp.o
+Linking CXX executable bin/x86_64/Debug/GlobalMemoryBandwidth
+[ 71%] Built target GlobalMemoryBandwidth
+Scanning dependencies of target LDSBandwidth
+[ 85%] Building CXX object LDSBandwidth/CMakeFiles/LDSBandwidth.dir/LDSBandwidth.cpp.o
+Linking CXX executable bin/x86_64/Debug/LDSBandwidth
+[ 85%] Built target LDSBandwidth
+Scanning dependencies of target MemoryOptimizations
+[100%] Building CXX object MemoryOptimizations/CMakeFiles/MemoryOptimizations.dir/MemoryOptimizations.cpp.o
+/home/jin/dev/oclb/MemoryOptimizations/MemoryOptimizations.cpp: In member function ‘int MemoryOptimizations::setupCL()’:
+/home/jin/dev/oclb/MemoryOptimizations/MemoryOptimizations.cpp:199:24: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated (declared at /opt/AMDAPPSDK-3.0/include/CL/cl.h:1359) [-Wdeprecated-declarations]
+         commandQueue = clCreateCommandQueue(context,
+                        ^
+/home/jin/dev/oclb/MemoryOptimizations/MemoryOptimizations.cpp:202:52: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated (declared at /opt/AMDAPPSDK-3.0/include/CL/cl.h:1359) [-Wdeprecated-declarations]
+                                             &status);
+                                                    ^
+Linking CXX executable bin/x86_64/Debug/MemoryOptimizations
+[100%] Built target MemoryOptimizations

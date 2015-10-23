@@ -1,0 +1,5 @@
+/home/jin/dev/oclb/BufferBandwidth/CMakeFiles/BufferBandwidth.dir
+/home/jin/dev/oclb/GlobalMemoryBandwidth/CMakeFiles/GlobalMemoryBandwidth.dir
+/home/jin/dev/oclb/ConstantBandwidth/CMakeFiles/ConstantBandwidth.dir
+/home/jin/dev/oclb/LDSBandwidth/CMakeFiles/LDSBandwidth.dir
+/home/jin/dev/oclb/MemoryOptimizations/CMakeFiles/MemoryOptimizations.dir

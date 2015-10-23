@@ -1,0 +1,1 @@
+/usr/bin/g++   -g3 -gdwarf-2    -m64    CMakeFiles/LDSBandwidth.dir/LDSBandwidth.cpp.o  -o bin/x86_64/Debug/LDSBandwidth -rdynamic /opt/AMDAPPSDK-3.0/lib/x86_64/libOpenCL.so -lrt -Wl,-rpath,/opt/AMDAPPSDK-3.0/lib/x86_64 

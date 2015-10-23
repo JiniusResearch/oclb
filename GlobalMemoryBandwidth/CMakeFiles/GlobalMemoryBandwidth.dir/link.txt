@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG    -m64    CMakeFiles/GlobalMemoryBandwidth.dir/GlobalMemoryBandwidth.cpp.o  -o bin/x86_64/Release/GlobalMemoryBandwidth -rdynamic -lOpenCL -lrt 

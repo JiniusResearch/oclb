@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/jin/dev/oclb/BufferBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/BufferBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/BufferBandwidth.dir/BufferBandwidth.cpp.o -c /home/jin/dev/oclb/BufferBandwidth/BufferBandwidth.cpp",
+  "file": "/home/jin/dev/oclb/BufferBandwidth/BufferBandwidth.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/BufferBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/BufferBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/BufferBandwidth.dir/Host.cpp.o -c /home/jin/dev/oclb/BufferBandwidth/Host.cpp",
+  "file": "/home/jin/dev/oclb/BufferBandwidth/Host.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/BufferBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/BufferBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/BufferBandwidth.dir/Log.cpp.o -c /home/jin/dev/oclb/BufferBandwidth/Log.cpp",
+  "file": "/home/jin/dev/oclb/BufferBandwidth/Log.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/ConstantBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/ConstantBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/ConstantBandwidth.dir/ConstantBandwidth.cpp.o -c /home/jin/dev/oclb/ConstantBandwidth/ConstantBandwidth.cpp",
+  "file": "/home/jin/dev/oclb/ConstantBandwidth/ConstantBandwidth.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/GlobalMemoryBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/GlobalMemoryBandwidth/../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/GlobalMemoryBandwidth.dir/GlobalMemoryBandwidth.cpp.o -c /home/jin/dev/oclb/GlobalMemoryBandwidth/GlobalMemoryBandwidth.cpp",
+  "file": "/home/jin/dev/oclb/GlobalMemoryBandwidth/GlobalMemoryBandwidth.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/LDSBandwidth",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/LDSBandwidth/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/LDSBandwidth.dir/LDSBandwidth.cpp.o -c /home/jin/dev/oclb/LDSBandwidth/LDSBandwidth.cpp",
+  "file": "/home/jin/dev/oclb/LDSBandwidth/LDSBandwidth.cpp"
+},
+{
+  "directory": "/home/jin/dev/oclb/MemoryOptimizations",
+  "command": "/usr/bin/g++    -g3 -gdwarf-2 -I/opt/AMDAPPSDK-3.0/include -I/home/jin/dev/oclb/MemoryOptimizations/../../../../include/SDKUtil -I/opt/AMDAPPSDK-3.0/include/SDKUtil     -g  -m64    -o CMakeFiles/MemoryOptimizations.dir/MemoryOptimizations.cpp.o -c /home/jin/dev/oclb/MemoryOptimizations/MemoryOptimizations.cpp",
+  "file": "/home/jin/dev/oclb/MemoryOptimizations/MemoryOptimizations.cpp"
+}
+]

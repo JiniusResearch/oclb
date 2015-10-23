@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="BufferBandwidth">
+        <df name="bin">
+          <df name="x86_64">
+            <df name="Debug">
+              <in>BufferBandwidth_Kernels.cl</in>
+            </df>
+          </df>
+        </df>
+        <df name="CMakeFiles">
+          <df name="BufferBandwidth.dir">
+          </df>
+        </df>
+        <df name="docs">
+        </df>
+        <in>BufferBandwidth.cpp</in>
+        <in>BufferBandwidth.hpp</in>
+        <in>BufferBandwidth_Kernels.cl</in>
+        <in>Host.cpp</in>
+        <in>Host.h</in>
+        <in>Log.cpp</in>
+        <in>Log.h</in>
+        <in>Shared.cpp</in>
+        <in>Shared.h</in>
+        <in>Timer.cpp</in>
+        <in>Timer.h</in>
+      </df>
+      <df name="CMakeFiles">
+        <df name="3.2.2">
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
+          </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
+          </df>
+        </df>
+        <df name="CMakeTmp">
+        </df>
+        <in>feature_tests.c</in>
+        <in>feature_tests.cxx</in>
+      </df>
+      <df name="ConstantBandwidth">
+        <df name="bin">
+          <df name="x86_64">
+            <df name="Debug">
+              <in>ConstantBandwidth_Kernels.cl</in>
+            </df>
+          </df>
+        </df>
+        <df name="CMakeFiles">
+          <df name="ConstantBandwidth.dir">
+          </df>
+        </df>
+        <df name="docs">
+        </df>
+        <in>ConstantBandwidth.cpp</in>
+        <in>ConstantBandwidth.hpp</in>
+        <in>ConstantBandwidth_Kernels.cl</in>
+      </df>
+      <df name="GlobalMemoryBandwidth">
+        <df name="bin">
+          <df name="x86_64">
+            <df name="Debug">
+              <in>GlobalMemoryBandwidth_Kernels.cl</in>
+            </df>
+            <df name="Release">
+              <in>GlobalMemoryBandwidth_Kernels.cl</in>
+            </df>
+          </df>
+        </df>
+        <df name="CMakeFiles">
+          <df name="3.2.2">
+            <df name="CompilerIdC">
+              <in>CMakeCCompilerId.c</in>
+            </df>
+            <df name="CompilerIdCXX">
+              <in>CMakeCXXCompilerId.cpp</in>
+            </df>
+          </df>
+          <df name="CMakeTmp">
+          </df>
+          <df name="GlobalMemoryBandwidth.dir">
+          </df>
+          <in>feature_tests.c</in>
+          <in>feature_tests.cxx</in>
+        </df>
+        <df name="docs">
+        </df>
+        <in>GlobalMemoryBandwidth.cpp</in>
+        <in>GlobalMemoryBandwidth.hpp</in>
+        <in>GlobalMemoryBandwidth_Kernels.cl</in>
+        <in>gtx970.report</in>
+      </df>
+      <df name="include">
+        <df name="CL">
+          <df name="internal">
+            <in>cl_agent_amd.h</in>
+            <in>cl_debugger_amd.h</in>
+            <in>cl_icd_amd.h</in>
+            <in>cl_kernel_info_amd.h</in>
+            <in>cl_profile_amd.h</in>
+            <in>cl_thread_trace_amd.h</in>
+          </df>
+          <in>cl.h</in>
+          <in>cl.hpp</in>
+          <in>cl_ext.h</in>
+          <in>cl_gl.h</in>
+          <in>cl_gl_ext.h</in>
+          <in>cl_platform.h</in>
+          <in>opencl.h</in>
+        </df>
+        <df name="GL">
+          <in>glew.h</in>
+          <in>glext.h</in>
+          <in>glut.h</in>
+          <in>glxew.h</in>
+          <in>wglew.h</in>
+        </df>
+        <df name="SDKUtil">
+          <in>BoltAMPUtil.hpp</in>
+          <in>BoltCLUtil.hpp</in>
+          <in>CLUtil.hpp</in>
+          <in>OpenCVUtil.hpp</in>
+          <in>SDKBitMap.hpp</in>
+          <in>SDKFile.hpp</in>
+          <in>SDKThread.hpp</in>
+          <in>SDKUtil.hpp</in>
+        </df>
+      </df>
+      <df name="LDSBandwidth">
+        <df name="bin">
+          <df name="x86_64">
+            <df name="Debug">
+              <in>LDSBandwidth_Kernels.cl</in>
+            </df>
+          </df>
+        </df>
+        <df name="CMakeFiles">
+          <df name="LDSBandwidth.dir">
+          </df>
+        </df>
+        <df name="docs">
+        </df>
+        <in>LDSBandwidth.cpp</in>
+        <in>LDSBandwidth.hpp</in>
+        <in>LDSBandwidth_Kernels.cl</in>
+      </df>
+      <df name="MemoryOptimizations">
+        <df name="bin">
+          <df name="x86_64">
+            <df name="Debug">
+              <in>MemoryOptimizations_Kernels.cl</in>
+            </df>
+          </df>
+        </df>
+        <df name="CMakeFiles">
+          <df name="MemoryOptimizations.dir">
+          </df>
+        </df>
+        <df name="docs">
+        </df>
+        <in>MemoryOptimizations.cpp</in>
+        <in>MemoryOptimizations.hpp</in>
+        <in>MemoryOptimizations_Kernels.cl</in>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
