@@ -42,63 +42,13 @@ ComputeBench::unmapBuffer(cl_mem deviceBuffer, void* hostPointer)
 int
 ComputeBench::setupComputeBench()
 {
-    cl_uint sizeElement = vectorSize * sizeof (cl_float);
-    cl_uint readLength = length + (NUM_READS * 1024 / sizeElement);
-
-    /*
-     * Map cl_mem inputBuffer to host for writing
-     * Note the usage of CL_MAP_WRITE_INVALIDATE_REGION flag
-     * This flag indicates the runtime that whole buffer is mapped for writing and
-     * there is no need of device->host transfer. Hence map call will be faster
-     */
-    int status = mapBuffer(inputBuffer, input, (readLength * sizeElement), CL_MAP_WRITE_INVALIDATE_REGION);
-    CHECK_ERROR(status, SDK_SUCCESS, "Failed to map device buffer.(inputBuffer)");
-
-    // random initialisation of input
-    fillRandom<cl_float>(input,
-            readLength * vectorSize,
-            1,
-            0,
-            (cl_float) (readLength - 1));
-
-    /* Unmaps cl_mem inputBuffer from host
-     * host->device transfer happens if device exists in different address-space
-     */
-    status = unmapBuffer(inputBuffer, input);
-    CHECK_ERROR(status, SDK_SUCCESS, "Failed to unmap device buffer.(inputBuffer)");
-
-
     return SDK_SUCCESS;
 }
 
 int
 ComputeBench::genBinaryImage()
 {
-    bifData binaryData;
-    binaryData.kernelName = std::string("ComputeBench.cl");
-
-    // Always using vector-width of 1 to dump kernels
-    if (vectorSize != 0) {
-        std::cout <<
-                "Ignoring specified vector-width. Always using vector-width of 1 to dump kernels"
-                << std::endl;
-    }
-    vectorSize = 1;
-
-    // Pass vectorSize as DATATYPE to kernel
-    char buildOption[128];
-
-    sprintf(buildOption, "-D DATATYPE=float -D DATATYPE2=float4 ");
-
-    binaryData.flagsStr = std::string(buildOption);
-    if (sampleArgs->isComplierFlagsSpecified()) {
-        binaryData.flagsFileName = std::string(sampleArgs->flags.c_str());
-    }
-
-    binaryData.binaryName = std::string(sampleArgs->dumpBinary.c_str());
-    int status = generateBinaryImage(binaryData);
-    CHECK_ERROR(status, SDK_SUCCESS, "OpenCL Generate Binary Image Failed");
-    return status;
+    return 0;
 }
 
 int
@@ -123,8 +73,7 @@ ComputeBench::setupCL(void)
      * the AMD one if available or a reasonable default.
      */
     cl_platform_id platform = NULL;
-    int retValue = getPlatform(platform, sampleArgs->platformId,
-            sampleArgs->isPlatformEnabled());
+    int retValue = getPlatform(platform, sampleArgs->platformId, sampleArgs->isPlatformEnabled());
     CHECK_ERROR(retValue, SDK_SUCCESS, "getPlatform() failed");
 
     // Display available devices.
@@ -202,32 +151,9 @@ ComputeBench::setupCL(void)
         }
     }
 
-    // inputBufferExtra does the highest single allocation of all
-    // Check if this is allocatable, else reduce 'length'
-    cl_ulong maxAllocation = sizeof (cl_float) * vectorSize * ((length * NUM_READS) + NUM_READS);
-    while (maxAllocation > deviceInfo.maxMemAllocSize) {
-        length /= 2;
-        maxAllocation = sizeof (cl_float) * vectorSize * ((length * NUM_READS) + NUM_READS);
-    }
-
-    globalThreads = length;
-
-    cl_uint sizeElement = vectorSize * sizeof (cl_float);
-    cl_uint readLength = length + (NUM_READS * 1024 / sizeElement);
-
-    readRange = readLength;
-    cl_uint size = readLength * vectorSize * sizeof (cl_float);
-
-    // Create input buffer
-    inputBuffer = clCreateBuffer(context, CL_MEM_READ_ONLY, size, 0, &status);
-    CHECK_OPENCL_ERROR(status, "clCreateBuffer failed. (inputBuffer)");
-
 
     outputKadd = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof (cl_float) * vectorSize * length, 0, &status);
     CHECK_OPENCL_ERROR(status, "clCreateBuffer failed. (outputKadd)");
-
-    constValue = clCreateBuffer(context, CL_MEM_READ_ONLY, vectorSize * sizeof (cl_float), 0, &status);
-    CHECK_OPENCL_ERROR(status, "clCreateBuffer failed.(constValue)");
 
     // create a CL program using the kernel source
     char buildOption[512];
@@ -268,10 +194,9 @@ ComputeBench::setupCL(void)
 int
 ComputeBench::bandwidth(cl_kernel &kernel,
         cl_mem outputBuffer,
-        cl_float *outputSVMBuffer,
         double *timeTaken,
-        double *gbps,
-        bool useSVM = false)
+        double *gbps
+        )
 {
     cl_int status;
 
@@ -290,36 +215,6 @@ ComputeBench::bandwidth(cl_kernel &kernel,
 
     //Set appropriate arguments to the kernel
     int argIndex = 0;
-    if (!writeFlag) {
-        {
-            status = clSetKernelArg(kernel, argIndex++, sizeof (cl_mem), (void *) &inputBuffer);
-            CHECK_OPENCL_ERROR(status, "clSetKernelArg failed.(inputBuffer)");
-        }
-    } else {
-        // Pass a single constant value to kernel of type - float<vectorSize>
-        cl_float *temp;
-
-        // Map cl_mem constValue to host for writing
-        status = mapBuffer(constValue, temp,
-                (vectorSize * sizeof (cl_float)),
-                CL_MAP_WRITE_INVALIDATE_REGION);
-        CHECK_ERROR(status, SDK_SUCCESS, "Failed to map device buffer.(constValue)");
-
-        memset(temp, 0, vectorSize * sizeof (cl_float));
-
-        /* Unmaps cl_mem constValue from host
-         * host->device transfer happens if device exists in different address-space
-         */
-        status = unmapBuffer(constValue, temp);
-        CHECK_ERROR(status, SDK_SUCCESS, "Failed to unmap device buffer.(constValue)");
-
-        status = clSetKernelArg(kernel,
-                argIndex++,
-                sizeof (cl_mem),
-                (void *) &constValue);
-        CHECK_OPENCL_ERROR(status, "clSetKernelArg failed.(constValue)");
-    }
-
     {
         status = clSetKernelArg(kernel,
                 argIndex++,
@@ -380,15 +275,10 @@ ComputeBench::bandwidth(cl_kernel &kernel,
     }
 
     // Copy bytes
-    int bytesPerThread = 100;
-//    if (vec3 == true) {
-//        bytesPerThread = NUM_READS * 3 * sizeof (cl_float);
-//    } else {
-//        bytesPerThread = NUM_READS * vectorSize * sizeof (cl_float);
-//    }
+    int bytesPerThread = FORLOOP;
     double bytes = (double) (iter * bytesPerThread);
     double perf = (bytes / sec) * 1e-9;
-    perf *= globalThreads;
+    perf *= globalThreads * vectorSize;
 
     *gbps = perf;
     *timeTaken = sec / iter;
@@ -403,7 +293,7 @@ ComputeBench::runCLKernels(void)
     std::cout << "-------------------------------------------" << std::endl;
 
     // Measure bandwidth of uncached linear reads from global buffer
-    int status = bandwidth(kernel[0], outputKadd, NULL, &KaddTime, &KaddGbps);
+    int status = bandwidth(kernel[0], outputKadd, &KaddTime, &KaddGbps);
     if (status != SDK_SUCCESS) {
         return SDK_FAILURE;
     }
@@ -483,7 +373,7 @@ ComputeBench::run()
     if (runCLKernels() != SDK_SUCCESS) {
         return SDK_FAILURE;
     }
-    if (sampleArgs->verify && verifyResults(useSVM) != SDK_SUCCESS) {
+    if (sampleArgs->verify && verifyResults() != SDK_SUCCESS) {
         return SDK_FAILURE;
     }
 
@@ -493,80 +383,59 @@ ComputeBench::run()
 }
 
 int
-ComputeBench::verifyResults(bool useSVM = false)
+ComputeBench::verifyResults()
 {
-    //    if (sampleArgs->verify) {
-    //        int vecElements = (vec3 == true) ? 3 : vectorSize;
-    //        int sizeElement = vectorSize * sizeof (cl_float);
-    //        int readLength = length + (NUM_READS * 1024 / sizeElement) + EXTRA_ELEMENTS;
-    //        int status, passStatus;
-    //
-    //        // Verify result for single access
-    //        verificationOutput = (cl_float*) malloc(length * vectorSize * sizeof (cl_float));
-    //        CHECK_ALLOCATION(verificationOutput,
-    //                "verificationOutput memory allocation failed");
-    //        {
-    //            /*
-    //             * Map cl_mem inputBuffer to host for reading
-    //             * device->host transfer happens if device exists in different address-space
-    //             */
-    //            status = mapBuffer(inputBuffer, input,
-    //                    (readLength * sizeElement),
-    //                    CL_MAP_READ);
-    //            CHECK_ERROR(status, SDK_SUCCESS, "Failed to map device buffer.(inputBuffer)");
-    //        }
-    //        ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //        std::cout << "\nVerifying results for Read-Linear(uncached) : ";
-    //        memset(verificationOutput, 0, length * vectorSize * sizeof (cl_float));
-    //
-    //        // Verify result for Linear access
-    //        for (int i = 0; i < (int) length; i++) {
-    //            int readPos = i;
-    //            for (int j = 0; j < NUM_READS; j++) {
-    //                readPos += OFFSET;
-    //                for (int k = 0; k < vecElements; k++) {
-    //                    verificationOutput[i * vectorSize + k] += input[readPos * vectorSize + k];
-    //                }
-    //            }
-    //        }
-    //
-    //        // Map cl_mem outputKadd to host for reading
-    //        status = mapBuffer(outputKadd, outputReadLU, (length * sizeElement), CL_MAP_READ);
-    //        CHECK_ERROR(status, SDK_SUCCESS, "Failed to map device buffer.(outputKadd)");
-    //
-    //        passStatus = 0;
-    //        float * devBuffer = (float *) outputReadLU;
-    //        float * refBuffer = (float *) verificationOutput;
-    //        for (int i = 0; i < (int) (length * vectorSize); i += vectorSize) {
-    //            for (int j = 0; j < vecElements; j++) {
-    //
-    //                float fErr = devBuffer[j] - refBuffer[j];
-    //                if (fErr < (float) 0)
-    //                    fErr = -fErr;
-    //
-    //                if (fErr > (float) 1e-5) {
-    //                    passStatus = 1;
-    //                    break;
-    //                }
-    //            }
-    //            if (passStatus != 0)
-    //                break;
-    //
-    //            devBuffer += vectorSize;
-    //            refBuffer += vectorSize;
-    //        }
-    //
-    //        status = unmapBuffer(outputKadd, outputReadLU);
-    //        CHECK_ERROR(status, SDK_SUCCESS, "Failed to unmap device buffer.(outputKadd)");
-    //
-    //        if (passStatus == 0) {
-    //            std::cout << "Passed!\n" << std::endl;
-    //        } else {
-    //            std::cout << "Failed!\n" << std::endl;
-    //            return SDK_FAILURE;
-    //        }
-    //
-    //    }
+    if (sampleArgs->verify) {
+        int vecElements = (vec3 == true) ? 3 : vectorSize;
+        int sizeElement = vectorSize * sizeof (cl_float);
+        //int readLength = length + (NUM_READS * 1024 / sizeElement) + EXTRA_ELEMENTS;
+        int status, passStatus;
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        std::cout << "\nVerifying results for KAdd : " << std::endl;
+
+        // Map cl_mem outputKadd to host for reading
+        status = mapBuffer(outputKadd, outputKaddHost, (length * sizeElement), CL_MAP_READ);
+        CHECK_ERROR(status, SDK_SUCCESS, "Failed to map device buffer.(outputKadd)");
+
+        passStatus = 1;
+        uint* devBuffer = (uint *) outputKaddHost;
+
+        for (int i = 0; i < length; i++) {
+            
+            for (int j = 0; j < vecElements; j++) {
+                //uint answer = i+j;
+                uint answer = i;
+                for (int ii = 0; ii < 1000; ii++) {
+                    //answer ^= ii;
+                    //answer = answer << (ii ) | answer >> (32 - ii );
+                    //answer += ii;
+                    
+                    answer += ii;
+                    answer = answer ^ ii;
+                    answer++;
+                }
+//                std::cout << " gid:" << i << " vec:" << j << " answer:" << answer << " result:" << devBuffer[j] << std::endl;
+                if (devBuffer[j] != answer)
+                    passStatus = 0;
+            }
+            if (passStatus != 1)
+                break;
+
+            devBuffer += vectorSize;
+        }
+
+        status = unmapBuffer(outputKadd, outputKaddHost);
+        CHECK_ERROR(status, SDK_SUCCESS, "Failed to unmap device buffer.(outputKadd)");
+
+        if (passStatus == 1) {
+            std::cout << "Passed!\n" << std::endl;
+        } else {
+            std::cout << "Failed!\n" << std::endl;
+            return SDK_FAILURE;
+        }
+
+    }
 
     return SDK_SUCCESS;
 }
@@ -586,11 +455,11 @@ ComputeBench::printStats()
             << "Setup Time " << ": " << setupTime << " secs" << std::endl << std::endl;
 
     std::cout << "\n1.  Add" << std::endl;
-    strArray[0] = "Size (Bytes)";
+    strArray[0] = "Times";
     stats[0] = toString(sizeInBytesPerIter, std::dec);
     strArray[1] = "Avg. Kernel Time (sec)";
     stats[1] = toString(KaddTime, std::dec);
-    strArray[2] = "Avg Bandwidth (GBPS)";
+    strArray[2] = "Avg Throughput ( GRPS )";
     stats[2] = toString(KaddGbps, std::dec);
     printStatistics(strArray, stats, 3);
 }
@@ -601,16 +470,8 @@ ComputeBench::cleanup()
     // Releases OpenCL resources (Context, Memory etc.)
     cl_int status;
 
-    status = clReleaseMemObject(inputBuffer);
-    CHECK_OPENCL_ERROR(status, "clReleaseMemObject failed.(inputBuffer)");
-
     status = clReleaseMemObject(outputKadd);
     CHECK_OPENCL_ERROR(status, "clReleaseMemObject failed.(outputKadd)");
-
-    if (constValue) {
-        status = clReleaseMemObject(constValue);
-        CHECK_OPENCL_ERROR(status, "clReleaseMemOnject failed.");
-    }
 
     for (int i = 0; i < NUM_KERNELS; i++) {
         status = clReleaseKernel(kernel[i]);
@@ -626,7 +487,6 @@ ComputeBench::cleanup()
     status = clReleaseContext(context);
     CHECK_OPENCL_ERROR(status, "clReleaseContext failed. (context)");
 
-    FREE(verificationOutput);
     FREE(devices);
 
     return SDK_SUCCESS;

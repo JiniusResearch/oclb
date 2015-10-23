@@ -1,11 +1,12 @@
 #ifndef COMPUTE_BENCH_H_
 #define COMPUTE_BENCH_H_
 
+#define FORLOOP 1000
 
-#define GROUP_SIZE 128
+#define GROUP_SIZE 64
 #define NUM_READS 2
 #define NUM_KERNELS 1
-#define NUM_INPUT 4096 * 128
+#define NUM_INPUT 1024 * 64
 #define SAMPLE_VERSION "AMD-APP-SDK-v3.0.124.3"
 
 //Header Files
@@ -27,20 +28,12 @@ class ComputeBench {
     cl_double setupTime; /**< Time for setting up OpenCL */
     cl_uint length; /**< Length of the input data */
     cl_uint readRange;
-    
-    cl_float *input; /**< Input array */
-    
-    
-    cl_float *verificationOutput; /**< Output Array for Verification */
+
     cl_context context; /**< CL context */
     cl_device_id *devices; /**< CL device list */
 
-    cl_mem inputBuffer; /**< input buffer */
+    cl_uint* outputKaddHost;
     cl_mem outputKadd;
-    
-    cl_mem constValue;
-
-    
 
     cl_command_queue commandQueue; /**< CL command queue */
     cl_program program; /**< CL program */
@@ -56,14 +49,14 @@ class ComputeBench {
     iterations; /**< Number of iterations for kernel execution */
     int vectorSize; /**< float, float2, float4 */
     bool writeFlag;
-    
+
     bool uncachedRead;
     bool vec3;
-    
+
     double KaddGbps; /**< Record GBPS for every type of bandwidth test */
-    
+
     double KaddTime; /**< Record time for every type of bandwidth test */
-    
+
     SDKDeviceInfo deviceInfo; /**< Structure to store device information*/
 
     SDKTimer *sampleTimer; /**< SDKTimer object */
@@ -81,15 +74,13 @@ public:
         sampleArgs = new CLCommandArgs();
         sampleTimer = new SDKTimer();
         sampleArgs->sampleVerStr = SAMPLE_VERSION;
-        input = NULL;
+
         outputKadd = NULL;
-        verificationOutput = NULL;
 
         setupTime = 0;
         iterations = 100;
         length = NUM_INPUT;
-        vectorSize =
-                0; // Query the device later and select the preferred vector-size
+        vectorSize = 0; // Query the device later and select the preferred vector-size
         globalThreads = length;
         localThreads = GROUP_SIZE;
         writeFlag = false;
@@ -131,10 +122,9 @@ public:
 
     int bandwidth(cl_kernel &kernel,
             cl_mem outputBuffer,
-            cl_float *outputSVMBuffer,
             double *timeTaken,
-            double *gbps,
-            bool useSVM);
+            double *gbps
+            );
 
     /**
      * Override from SDKSample. Print sample stats.
@@ -173,7 +163,7 @@ public:
      * Verify against reference implementation
      * @return SDK_SUCCESS on success and SDK_FAILURE on failure
      */
-    int verifyResults(bool useSVM);
+    int verifyResults();
 
 private:
 
